@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    //id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.24"
+    id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.24"
 }
 
 group 'auto'
@@ -25,7 +25,7 @@ dependencies {
 
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '7.10.1'
-    
+
     implementation group: 'io.cucumber', name: 'cucumber-java8', version: '7.10.1'
     implementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.10.1'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.7.2'
@@ -46,3 +46,11 @@ task cucumber() {
     }
 }
 
+cucumberReports {
+    outputDir = file('reports/')
+    buildId = '0'
+    reports = files('reports/cucumber.json')
+    testTasksFinalizedByReport = false
+}
+
+cucumber.finalizedBy(generateCucumberReports)
