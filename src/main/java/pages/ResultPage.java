@@ -1,30 +1,25 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import java.util.List;
 
 public class ResultPage {
     WebDriver driver;
 
+    @FindBy(css= "h3")
     public List<WebElement> links;
 
     // Constructor
     public ResultPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(this.driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
     public void clickLink(int position) throws Exception {
-        links = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(driver -> {
-                    List<WebElement> list = driver.findElements(By.cssSelector("h3"));
-                    return list.size() > 0 ? list : null;
-                });
         links.get(position - 1).click();
     }
 
